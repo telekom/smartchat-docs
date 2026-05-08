@@ -19,36 +19,48 @@ jobs:
       - name: Get latest GitLab commit SHA
         id: check
         run: |
-          SOURCE_SHA=$(curl -sf \
-            --header "DEPLOY-TOKEN: ${GITLAB_DEPLOY_TOKEN}" \
-            "${GITLAB_API}/projects/${GITLAB_PROJECT}/repository/branches/main" \
-            | jq -r '.commit.id')
+          HTTP_CODE=$(curl -s -o /tmp/branch.json -w "%{http_code}" \
+            -u "${GITLAB_DEPLOY_TOKEN_USER}:${GITLAB_DEPLOY_TOKEN}" \
+            "${GITLAB_API}/projects/${GITLAB_PROJECT}/repository/branches/main")
+          echo "GitLab API response: ${HTTP_CODE}"
+
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "GitLab API failed with HTTP ${HTTP_CODE}"
+            cat /tmp/branch.json
+            exit 1
+          fi
+
+          SOURCE_SHA=$(jq -r '.commit.id' /tmp/branch.json)
+          echo "Source SHA: ${SOURCE_SHA}"
           echo "source_sha=${SOURCE_SHA}" >> "$GITHUB_OUTPUT"
 
           LAST_SHA=""
           LAST_SHA_URL="https://raw.githubusercontent.com/${{ github.repository }}/main/.source-sha"
           LAST_SHA=$(curl -sf "$LAST_SHA_URL" || echo "")
+          echo "Last SHA: ${LAST_SHA:-none}"
 
           if [ "$SOURCE_SHA" = "$LAST_SHA" ]; then
             echo "No changes — skipping"
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
-            echo "New commit: ${SOURCE_SHA} (was: ${LAST_SHA:-none})"
+            echo "New commit detected"
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
         env:
+          GITLAB_DEPLOY_TOKEN_USER: ${{ secrets.GITLAB_DEPLOY_TOKEN_USER }}
           GITLAB_DEPLOY_TOKEN: ${{ secrets.GITLAB_DEPLOY_TOKEN }}
 
       - name: Download external build artifact
         if: steps.check.outputs.changed == 'true'
         run: |
           curl -sf \
-            --header "DEPLOY-TOKEN: ${GITLAB_DEPLOY_TOKEN}" \
+            -u "${GITLAB_DEPLOY_TOKEN_USER}:${GITLAB_DEPLOY_TOKEN}" \
             "${GITLAB_API}/projects/${GITLAB_PROJECT}/jobs/artifacts/main/download?job=build:external" \
             -o artifacts.zip
           mkdir dist
           unzip -o artifacts.zip -d dist
         env:
+          GITLAB_DEPLOY_TOKEN_USER: ${{ secrets.GITLAB_DEPLOY_TOKEN_USER }}
           GITLAB_DEPLOY_TOKEN: ${{ secrets.GITLAB_DEPLOY_TOKEN }}
 
       - name: Deploy to GitHub Pages
