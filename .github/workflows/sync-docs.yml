@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '0 * * * *'
   workflow_dispatch:
+    inputs:
+      force:
+        description: 'Force rebuild even if no changes'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -31,12 +36,13 @@ jobs:
           LAST_SHA=$(curl -sf "https://raw.githubusercontent.com/${{ github.repository }}/gh-pages/.source-sha" || echo "")
           echo "Last SHA: ${LAST_SHA:-none}"
 
-          if [ "$SOURCE_SHA" = "$LAST_SHA" ]; then
+          FORCE="${{ inputs.force }}"
+          if [ "$FORCE" = "true" ] || [ "$SOURCE_SHA" != "$LAST_SHA" ]; then
+            echo "New commit detected (force=${FORCE})"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
             echo "No changes — skipping"
             echo "changed=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "New commit detected"
-            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Setup Node.js
