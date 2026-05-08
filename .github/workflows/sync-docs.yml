@@ -28,7 +28,7 @@ jobs:
           echo "Source SHA: ${SOURCE_SHA}"
           echo "source_sha=${SOURCE_SHA}" >> "$GITHUB_OUTPUT"
 
-          LAST_SHA=$(curl -sf "https://raw.githubusercontent.com/${{ github.repository }}/main/.source-sha" || echo "")
+          LAST_SHA=$(curl -sf "https://raw.githubusercontent.com/${{ github.repository }}/gh-pages/.source-sha" || echo "")
           echo "Last SHA: ${LAST_SHA:-none}"
 
           if [ "$SOURCE_SHA" = "$LAST_SHA" ]; then
@@ -70,13 +70,13 @@ jobs:
         run: |
           cd source/dist
           echo "${{ steps.check.outputs.source_sha }}" > .source-sha
-          git init -b main
+          git init -b gh-pages
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "Deploy external docs from ${SOURCE_SHA:0:8}"
           git remote add origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
-          git push --force origin main
+          git push --force origin gh-pages
         env:
           SOURCE_SHA: ${{ steps.check.outputs.source_sha }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
