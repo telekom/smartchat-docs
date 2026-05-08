@@ -76,6 +76,7 @@ jobs:
         run: |
           cd source/dist
           touch .nojekyll
+          echo "docs.smartchat.ai.t-systems.net" > CNAME
           echo "${{ steps.check.outputs.source_sha }}" > .source-sha
           git init -b gh-pages
           git config user.name "github-actions[bot]"
