@@ -50,7 +50,7 @@ jobs:
         run: |
           curl -fsSL "https://github.com/terrastruct/d2/releases/download/v0.7.1/d2-v0.7.1-linux-amd64.tar.gz" -o /tmp/d2.tar.gz
           tar -xzf /tmp/d2.tar.gz -C /tmp
-          find /tmp -maxdepth 3 -name "d2" -type f -exec sudo mv {} /usr/local/bin/d2 \;
+          sudo mv /tmp/d2-v0.7.1/bin/d2 /usr/local/bin/d2
           chmod +x /usr/local/bin/d2
 
       - name: Build external docs
