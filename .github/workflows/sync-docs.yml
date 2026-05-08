@@ -69,6 +69,7 @@ jobs:
         if: steps.check.outputs.changed == 'true'
         run: |
           cd source/dist
+          touch .nojekyll
           echo "${{ steps.check.outputs.source_sha }}" > .source-sha
           git init -b gh-pages
           git config user.name "github-actions[bot]"
