@@ -61,8 +61,8 @@ jobs:
         if: steps.check.outputs.changed == 'true'
         working-directory: source
         run: |
-          bun install
-          BUILD_TARGET=external RELEASE_SCOPE=current bun run build
+          bun install --silent
+          BUILD_TARGET=external RELEASE_SCOPE=current bun run build > /dev/null 2>&1
           rm -rf dist/internal
 
       - name: Deploy to GitHub Pages
