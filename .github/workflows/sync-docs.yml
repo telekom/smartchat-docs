@@ -9,6 +9,9 @@ env:
   GITLAB_API: https://gitlab.devops.telekom.de/api/v4
   GITLAB_PROJECT: ai%2Fgenai%2Fai-foundation-services%2Fsmartchat%2Fdocs
 
+permissions:
+  contents: write
+
 jobs:
   sync:
     runs-on: ubuntu-latest
