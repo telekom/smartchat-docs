@@ -2,7 +2,7 @@ name: Sync external docs from GitLab
 
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 6,8,10,12,14,16,18 * * 1-5'
   workflow_dispatch:
     inputs:
       force:
@@ -17,11 +17,26 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone GitLab docs repo
+      - name: Clone GitLab docs repo (main)
         run: |
           git clone --depth 1 --branch main \
             https://${GITLAB_DEPLOY_TOKEN_USER}:${GITLAB_DEPLOY_TOKEN}@gitlab.devops.telekom.de/ai/genai/ai-foundation-services/smartchat/docs.git \
             source
+        env:
+          GITLAB_DEPLOY_TOKEN_USER: ${{ secrets.GITLAB_DEPLOY_TOKEN_USER }}
+          GITLAB_DEPLOY_TOKEN: ${{ secrets.GITLAB_DEPLOY_TOKEN }}
+
+      - name: Clone next branch (if it exists)
+        id: next
+        run: |
+          if git clone --depth 1 --branch next \
+            https://${GITLAB_DEPLOY_TOKEN_USER}:${GITLAB_DEPLOY_TOKEN}@gitlab.devops.telekom.de/ai/genai/ai-foundation-services/smartchat/docs.git \
+            source-next 2>/dev/null; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "next_sha=$(git -C source-next rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
         env:
           GITLAB_DEPLOY_TOKEN_USER: ${{ secrets.GITLAB_DEPLOY_TOKEN_USER }}
           GITLAB_DEPLOY_TOKEN: ${{ secrets.GITLAB_DEPLOY_TOKEN }}
@@ -36,9 +51,13 @@ jobs:
           LAST_SHA=$(curl -sf "https://raw.githubusercontent.com/${{ github.repository }}/gh-pages/.source-sha" || echo "")
           echo "Last SHA: ${LAST_SHA:-none}"
 
+          LAST_NEXT_SHA=$(curl -sf "https://raw.githubusercontent.com/${{ github.repository }}/gh-pages/.source-sha-next" || echo "")
+          NEXT_SHA="${{ steps.next.outputs.next_sha }}"
+          echo "Next SHA: ${NEXT_SHA:-none}, Last next SHA: ${LAST_NEXT_SHA:-none}"
+
           FORCE="${{ inputs.force }}"
-          if [ "$FORCE" = "true" ] || [ "$SOURCE_SHA" != "$LAST_SHA" ]; then
-            echo "New commit detected (force=${FORCE})"
+          if [ "$FORCE" = "true" ] || [ "$SOURCE_SHA" != "$LAST_SHA" ] || { [ -n "$NEXT_SHA" ] && [ "$NEXT_SHA" != "$LAST_NEXT_SHA" ]; }; then
+            echo "Rebuild triggered (force=${FORCE})"
             echo "changed=true" >> "$GITHUB_OUTPUT"
           else
             echo "No changes — skipping"
@@ -63,13 +82,22 @@ jobs:
           sudo mv /tmp/d2-v0.7.1/bin/d2 /usr/local/bin/d2
           chmod +x /usr/local/bin/d2
 
-      - name: Build external docs
+      - name: Build external docs (main)
         if: steps.check.outputs.changed == 'true'
         working-directory: source
         run: |
           bun install --silent
           BUILD_TARGET=external RELEASE_SCOPE=current bun run build > /dev/null 2>&1
           rm -rf dist/internal
+
+      - name: Build external docs (next)
+        if: steps.check.outputs.changed == 'true' && steps.next.outputs.exists == 'true'
+        working-directory: source-next
+        run: |
+          bun install --silent
+          BUILD_TARGET=external BASE_PATH=/next RELEASE_SCOPE='' bun run build > /dev/null 2>&1
+          rm -rf dist/internal
+          mv dist ../source/dist/next
 
       - name: Deploy to GitHub Pages
         if: steps.check.outputs.changed == 'true'
@@ -78,6 +106,9 @@ jobs:
           touch .nojekyll
           echo "docs.smartchat.ai.t-systems.net" > CNAME
           echo "${{ steps.check.outputs.source_sha }}" > .source-sha
+          if [ "${{ steps.next.outputs.exists }}" = "true" ]; then
+            echo "${{ steps.next.outputs.next_sha }}" > .source-sha-next
+          fi
           git init -b gh-pages
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
