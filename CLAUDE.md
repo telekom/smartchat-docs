@@ -2,6 +2,14 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Project
+
+**telekom/smartchat-docs** — public mirror and GitHub Pages host for the SmartChat product documentation, sourced from an internal Deutsche Telekom GitLab repo. The live site is served at `https://docs.smartchat.ai.t-systems.net` from the `gh-pages` branch.
+
+- **Owner:** [`telekom`](https://github.com/telekom) organization (public repository).
+- **Upstream source:** `gitlab.devops.telekom.de/ai/genai/ai-foundation-services/smartchat/docs` (private; access via deploy token secrets).
+- **License:** Apache License 2.0. No `LICENSE` file is currently committed — if you intend to enforce this, add a standard Apache-2.0 `LICENSE` file at the repo root.
+
 ## What this repository is
 
 This repo is a **publishing shell**, not the docs source. The actual SmartChat documentation lives in GitLab at `gitlab.devops.telekom.de/ai/genai/ai-foundation-services/smartchat/docs` (Astro + Bun + d2). This repo's only job is to periodically clone that GitLab source, build it with `BUILD_TARGET=external` to strip internal-only pages, and publish the result to GitHub Pages at `docs.smartchat.ai.t-systems.net`.
