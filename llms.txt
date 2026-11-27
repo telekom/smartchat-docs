@@ -1,0 +1,81 @@
+# Smartchat Docs
+
+> Documentation for T-Systems Smartchat.
+
+Each entry links to the Markdown version of one documentation page. The page for readers is the same URL without the trailing `index.md`. Inside a Markdown page, every heading links to its section on the page for readers.
+All pages in one file: https://docs.smartchat.ai.t-systems.net/llms-full.txt
+
+## Overview
+
+- [Smartchat Docs](https://docs.smartchat.ai.t-systems.net/index.md): Documentation for T-Systems Smartchat.
+- [FAQ](https://docs.smartchat.ai.t-systems.net/faq/index.md): Answers to common questions about Smartchat — integrations, security, Spaces and groups, large document collections, skills and models.
+
+## User Documentation
+
+- [Introduction](https://docs.smartchat.ai.t-systems.net/user/index.md): End-user introduction to Smartchat — what it is, how it works, and what it adds to OpenWebUI.
+
+## User Documentation / Guide
+
+- [Registration & Login](https://docs.smartchat.ai.t-systems.net/user/guide/getting-started/index.md): Registration and login for Smartchat.
+- [Starting a Chat](https://docs.smartchat.ai.t-systems.net/user/guide/starting-a-chat/index.md): Open a new chat, select a model, and make inputs.
+- [Working with Confidential Data](https://docs.smartchat.ai.t-systems.net/user/guide/confidential-data/index.md): Step by step — create a confidential collection, chat with it, and see how Smartchat keeps confidential data on Telekom-hosted models.
+- [Using Multiple Models Side by Side](https://docs.smartchat.ai.t-systems.net/user/guide/multi-model/index.md): Multi-model chat and combining responses.
+- [Understanding & Using Outputs](https://docs.smartchat.ai.t-systems.net/user/guide/understanding-outputs/index.md): Viewing sources and applying functions to responses.
+- [Rating Responses](https://docs.smartchat.ai.t-systems.net/user/guide/feedback/index.md): Rate a response, share it with the owners of your Space, and withdraw your consent.
+- [Managing & Organizing Chats](https://docs.smartchat.ai.t-systems.net/user/guide/managing-chats/index.md): Search chat histories, create folders, pin, archive, and import chats.
+- [Workspaces & Collaboration](https://docs.smartchat.ai.t-systems.net/user/guide/workspaces/index.md): Understanding workspaces, setting permissions, creating knowledge collections and assistants.
+- [Customizing Smartchat](https://docs.smartchat.ai.t-systems.net/user/guide/settings/index.md): Profile settings, chat dialog, and audio settings.
+- [Deep Dive](https://docs.smartchat.ai.t-systems.net/user/guide/deep-dive/index.md): How to use the Deep Dive research feature in Smartchat.
+- [Prompt Variables](https://docs.smartchat.ai.t-systems.net/user/guide/prompt-variables/index.md): Placeholders such as today's date or your name that fill themselves in when you use a prompt template or your personal system prompt.
+- [Reasoning Effort](https://docs.smartchat.ai.t-systems.net/user/guide/reasoning-effort/index.md): Choose how much a reasoning model thinks before it answers.
+- [Web Search](https://docs.smartchat.ai.t-systems.net/user/guide/web-search/index.md): Give Smartchat access to live web results via an external search provider or your model's built-in capability.
+
+## User Documentation / Concepts
+
+- [Confidentiality](https://docs.smartchat.ai.t-systems.net/user/concepts/confidentiality/index.md): How Smartchat keeps confidential data inside Telekom-hosted infrastructure, and what changes when a collection, a Space or a chat is confidential.
+- [Roles, Permissions & Access Control](https://docs.smartchat.ai.t-systems.net/user/concepts/roles-permissions-access-control/index.md): How roles, permissions and access control differ, and how groups connect them.
+- [Roles](https://docs.smartchat.ai.t-systems.net/user/concepts/roles/index.md): The roles in Smartchat (Application Owner, Data Scientist, Space Owner, Space User) and what each of them can administer.
+- [Groups](https://docs.smartchat.ai.t-systems.net/user/concepts/groups/index.md): The groups every Space has, who manages them, and how to create one.
+- [Permissions](https://docs.smartchat.ai.t-systems.net/user/concepts/permissions/index.md): What permissions allow, where they are set, and how they combine.
+- [Access Control](https://docs.smartchat.ai.t-systems.net/user/concepts/access-control/index.md): Who can use and edit the items in a Space, how to share them, and what Space Owners can see.
+- [Two-Factor Authentication](https://docs.smartchat.ai.t-systems.net/user/concepts/two-factor-authentication/index.md): How two-factor authentication works when you log in to Smartchat with email and password, and how the authenticator app relates to the login.
+- [Spaces](https://docs.smartchat.ai.t-systems.net/user/concepts/spaces/index.md): How Spaces work — Smartchat's multi-tenancy boundary.
+- [Workspace](https://docs.smartchat.ai.t-systems.net/user/concepts/workspace/index.md): The place in the UI where you access your collections, assistants, and prompt templates.
+
+## User Documentation / Files
+
+- [Supported File Types](https://docs.smartchat.ai.t-systems.net/user/files/supported-file-types/index.md): The file formats Smartchat can extract and index, grouped by category.
+- [File Size Limits](https://docs.smartchat.ai.t-systems.net/user/files/file-size-limits/index.md): How large a file may be to reach a Smartchat space and be indexed, covering the file size limit, the PDF page limit, the limit on how much text a file may contain, why the limits exist, and how very large files are handled.
+- [Ingestion Errors](https://docs.smartchat.ai.t-systems.net/user/files/ingestion-errors/index.md): What the ingestion statuses of a file mean, why a file fails to ingest, and what you can do about each cause.
+
+## User Documentation / Agents & Connectors
+
+- [Agent Mode](https://docs.smartchat.ai.t-systems.net/user/agents/index.md): What Agent Mode is, how to turn it on, and how agents use connectors to work with your organisation's tools.
+- [Artifacts](https://docs.smartchat.ai.t-systems.net/user/agents/artifacts/index.md): Find, open, download, continue editing and delete the files that agents produce.
+- [Using Connectors](https://docs.smartchat.ai.t-systems.net/user/agents/connectors/index.md): Connect an agent to tools like Telecontext with your own account, use them in a chat, and disconnect again.
+- [Managing Connectors](https://docs.smartchat.ai.t-systems.net/user/agents/managing-connectors/index.md): How MCP servers are registered as connectors, and how Application Owners and Space Owners decide who in a Space may use them.
+- [Custom Agents](https://docs.smartchat.ai.t-systems.net/user/agents/custom-agents/index.md): Who can build and share custom agents in a Space, and how Space Owners grant the permission.
+
+## User Documentation
+
+- [Glossary](https://docs.smartchat.ai.t-systems.net/user/glossary/index.md): Glossary of key terms used in Smartchat.
+
+## User Documentation / Administration
+
+- [Administration](https://docs.smartchat.ai.t-systems.net/user/admin/index.md): How Application Owners and Space Owners manage Spaces, users, settings and data connections directly in Smartchat.
+- [Managing Spaces and Users](https://docs.smartchat.ai.t-systems.net/user/admin/application-owner/index.md): How Application Owners create and configure Spaces and manage users and their Space roles across the whole instance.
+- [Setting Up a New Space](https://docs.smartchat.ai.t-systems.net/user/admin/setting-up-a-new-space/index.md): How an Application Owner creates a new Space and configures it in one step.
+- [Space Settings](https://docs.smartchat.ai.t-systems.net/user/admin/space-settings/index.md): Confidentiality, Space API key, upload limit and models: the settings a Space Owner controls in Administration.
+- [Agent Mode Settings](https://docs.smartchat.ai.t-systems.net/user/admin/agent-mode/index.md): Set the mode new chats start in and whether agents may use the web, for the whole instance and per Space.
+- [Managing Space Members](https://docs.smartchat.ai.t-systems.net/user/admin/managing-space-members/index.md): Add and remove members of your Space and promote them to Space Owner, directly in Smartchat.
+- [Confluence Sync](https://docs.smartchat.ai.t-systems.net/user/admin/confluence-sync/index.md): How to connect a Confluence Data Center space to your Smartchat Space for automatic synchronization.
+- [S3 AutoSync](https://docs.smartchat.ai.t-systems.net/user/admin/s3-autosync/index.md): Automatically sync files from an S3 (OTC OBS) bucket into your Smartchat Space.
+- [Reviewing Feedback](https://docs.smartchat.ai.t-systems.net/user/admin/feedback/index.md): How Space Owners review the ratings members give on responses, and how to switch feedback on or off for a Space.
+- [Single Sign-On](https://docs.smartchat.ai.t-systems.net/user/admin/single-sign-on/index.md): How people sign in to Smartchat through your identity provider, how IdP attributes map to Space and group membership, and the options that let your identity provider decide who has an account and which roles they get.
+- [Uploading Many Files at Once to a Collection via API](https://docs.smartchat.ai.t-systems.net/user/admin/uploading-many-files/index.md): How to add a whole folder of files to a space and put them in a collection, without uploading them one by one.
+
+## API Reference
+
+- [Global KB Guide](https://docs.smartchat.ai.t-systems.net/api-reference/global-chat/index.md): Step-by-step guide to creating a Smartchat session and querying the shared global knowledge base via the RAG API.
+- [Local KB (API only)](https://docs.smartchat.ai.t-systems.net/api-reference/local-chat/index.md): Walk through authentication, session creation, local file upload, ingestion, and prompting with the Smartchat local knowledge base.
+- [RAG API Reference](https://docs.smartchat.ai.t-systems.net/api-reference/rag-api/index.md): HTTP reference for the Smartchat RAG API gateway — covers authentication, service routing, and all available API operations.
